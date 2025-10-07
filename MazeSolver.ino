@@ -1,6 +1,3 @@
-// ─────────────────────────────────────────────────────────────
-//  PIN DEFINITIONS
-// ─────────────────────────────────────────────────────────────
 const int leftButtonPin  = 7;
 const int rightButtonPin = 5;
 const int photodiodePin  = A2;      // front “distance” sensor
@@ -17,9 +14,6 @@ const int pinMotorLEFT  = 2;
 const int pinMotorRIGHT = 4;
      // makes robot turn right
 
-// ─────────────────────────────────────────────────────────────
-//  CONSTANTS & GLOBALS
-// ─────────────────────────────────────────────────────────────
 const int   voltageThreshold = 770;   // wall-detect level
 const int   tooCloseValue    = 970;   // “back-up” level
 const int   fwdSpeed         = 37;   // 0-255 PWM
@@ -30,9 +24,6 @@ bool  gapDetected            = false;
 enum MoveState { FORWARD, TURN_LEFT, TURN_RIGHT };
 MoveState lastMove = FORWARD;
 
-// ─────────────────────────────────────────────────────────────
-//  SETUP
-// ─────────────────────────────────────────────────────────────
 void setup() {
   pinMode(leftButtonPin,  INPUT);
   pinMode(rightButtonPin, INPUT);
@@ -47,12 +38,9 @@ void setup() {
   pinMode(pinMotorRIGHT, OUTPUT);
 }
 
-// ─────────────────────────────────────────────────────────────
-//  MAIN LOOP
-// ─────────────────────────────────────────────────────────────
 void loop() {
 
-  // ── 1. GO FORWARD UNTIL WALL ──────────────────────────────
+  
   moveForward(fwdSpeed);           // start driving
   lastMove   = FORWARD;
   gapDetected = false;
@@ -61,11 +49,11 @@ void loop() {
   }
   stopForward();                   // halt drive motors
 
-  // ── 2. START LEFT TURN, LOOKING FOR GAP ───────────────────
+  
   moveLeft();
   lastMove = TURN_LEFT;
 
-  // ── 3. TURN-SCAN LOOP ─────────────────────────────────────
+  
   while (true) {
 
     int photoVal = analogRead(photodiodePin);
@@ -123,10 +111,6 @@ void loop() {
     }
   }
 }
-
-// ─────────────────────────────────────────────────────────────
-//  MOTOR CONTROL HELPERS
-// ─────────────────────────────────────────────────────────────
 
 // Stop forward/backward motors (drive wheels only)
 void stopForward() {
